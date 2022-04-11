@@ -2,7 +2,6 @@ import os
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-import tensorflow as tf
 from tensorflow import keras
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D
 from sklearn.model_selection import train_test_split
@@ -55,7 +54,7 @@ model = keras.Sequential([
                           Flatten(),
                           Dense(2, activation='softmax')
 ])
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 model.fit(x_train_split, y_train_split, epochs=10, batch_size=16, validation_data=(x_val_split, y_val_split))
 
 print(model.summary())
