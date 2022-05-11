@@ -140,11 +140,12 @@ for i in range(len(x_val_split)):
 print('Количество распознанных изображение в обучающей выборке: ', k_train, ' из ', 100)
 print('Количество распознанных изображений в выборке валидации: ', k_val, ' из ', len(x_val_split))
 
+uploaded = files.upload()
 img = Image.open(BytesIO(uploaded['img.jpg']))
 plt.imshow(img)
 
 img = np.array(img)
-img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
 img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
 x = img / 255
 x = np.expand_dims(x, axis=0)
@@ -155,4 +156,4 @@ print(res)
 if res == 0:
   print('No')
 else:
-  print('Yes')
+  print('Yes') 
