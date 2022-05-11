@@ -142,7 +142,7 @@ print('Количество распознанных изображений в �
 
 uploaded = files.upload()
 img = Image.open(BytesIO(uploaded['img.jpg']))
-plt.imshow(img)
+plt.imshow(img, 'gray')
 
 img = np.array(img)
 img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
@@ -151,9 +151,8 @@ x = img / 255
 x = np.expand_dims(x, axis=0)
 
 res = np.argmax(model.predict(x))
-print(res)
 
 if res == 0:
-  print('No')
+  print('There is no tumor')
 else:
-  print('Yes') 
+  print('There is a tumor')
