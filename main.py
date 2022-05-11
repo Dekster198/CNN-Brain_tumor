@@ -92,9 +92,16 @@ model.compile(loss='categorical_crossentropy', optimizer='nadam', metrics=['accu
 his = model.fit(x_train_split, y_train_split, epochs=10, batch_size=32, validation_data=(x_val_split, y_val_split))
 model.evaluate(x_test, y_test)
 
-plt.plot(his.history['loss'])
-plt.plot(his.history['val_loss'])
+plt.figure('Losses')
+plt.plot(his.history['loss'], label='Loss')
+plt.plot(his.history['val_loss'], label='Validation loss')
+plt.legend()
+plt.figure('Accuracy')
+plt.plot(his.history['accuracy'], label='Accuracy')
+plt.plot(his.history['val_accuracy'], label='Validation_accuracy')
+plt.legend()
 plt.show()
+
 print(model.summary())
 
 dataset_classes = {0:'No', 1:'Yes'}
