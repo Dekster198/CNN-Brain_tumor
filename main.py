@@ -5,7 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import tensorflow as tf
-from tensorflow.keras.models import Model
 from tensorflow import keras
 from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, BatchNormalization
 from sklearn.model_selection import train_test_split
@@ -33,7 +32,7 @@ def create_training_data():
     path = os.path.join(DATADIR_TRAIN, category)
     num_class = CATEGORIES.index(category)
     for img in os.listdir(path):
-      img_read = cv2.imread(os.path.join(path, img), cv2.IMREAD_COLOR)
+      img_read = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
       img_arr = cv2.resize(img_read, (IMG_SIZE, IMG_SIZE))
       training_data.append([img_arr, num_class])   
 
@@ -44,7 +43,7 @@ def create_testing_data():
     path = os.path.join(DATADIR_TRAIN, category)
     class_num = CATEGORIES.index(category)
     for img in os.listdir(path):
-      img_read = cv2.imread(os.path.join(path, img), cv2.IMREAD_COLOR)
+      img_read = cv2.imread(os.path.join(path, img), cv2.IMREAD_GRAYSCALE)
       img_resize = cv2.resize(img_read, (IMG_SIZE, IMG_SIZE))
       testing_data.append([img_resize, class_num])
 
@@ -77,7 +76,7 @@ x_test = x_test / 255
 y_test = keras.utils.to_categorical(y_test, 2)
 
 model = keras.Sequential([
-                          Conv2D(32, (3,3), activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 3)),
+                          Conv2D(32, (3,3), activation='relu', input_shape=(IMG_SIZE, IMG_SIZE, 1)),
                           MaxPooling2D((2,2)),
                           Conv2D(64, (3,3), activation='relu'),
                           MaxPooling2D((2,2)),
@@ -145,7 +144,7 @@ img = Image.open(BytesIO(uploaded['img.jpg']))
 plt.imshow(img, 'gray')
 
 img = np.array(img)
-img = cv2.cvtColor(img, cv2.IMREAD_COLOR)
+img = cv2.cvtColor(img, cv2.IMREAD_GRAYSCALE)
 img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
 x = img / 255
 x = np.expand_dims(x, axis=0)
@@ -155,4 +154,4 @@ res = np.argmax(model.predict(x))
 if res == 0:
   print('There is no tumor')
 else:
-  print('There is a tumor')
+  print('There is a tumor') 
