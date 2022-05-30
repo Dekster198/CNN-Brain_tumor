@@ -144,7 +144,7 @@ img = Image.open(BytesIO(uploaded['img.jpg']))
 plt.imshow(img, 'gray')
 
 img = np.array(img)
-img = cv2.cvtColor(img, cv2.IMREAD_GRAYSCALE)
+img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
 x = img / 255
 x = np.expand_dims(x, axis=0)
